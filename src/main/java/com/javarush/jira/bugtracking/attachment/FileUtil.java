@@ -16,10 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
 @UtilityClass
 public class FileUtil {
     private static final String ATTACHMENT_PATH = "./attachments/%s/";
 
+//todo Сделать рефакторинг метода com.javarush.jira.bugtracking.attachment.FileUtil#upload,
+// чтоб он использовал современный подход для работы с файловой системмой.
+    //io -> nio
     public static void upload(MultipartFile multipartFile, String directoryPath, String fileName) {
         if (multipartFile.isEmpty()) {
             throw new IllegalRequestDataException("Select a file to upload.");
@@ -36,6 +40,7 @@ public class FileUtil {
         }
     }
 
+    //nio
     public static Resource download(String fileLink) {
         Path path = Paths.get(fileLink);
         try {
