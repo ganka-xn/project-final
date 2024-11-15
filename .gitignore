@@ -6,4 +6,7 @@ logs
 attachments
 *.patch
 
+# Ignoring sensitive files
+.env
+
 

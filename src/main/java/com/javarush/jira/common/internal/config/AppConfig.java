@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.jakarta.Hibernate5JakartaModule;
 import com.javarush.jira.common.util.JsonUtil;
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,4 +67,10 @@ public class AppConfig {
         @JsonAnyGetter
         Map<String, Object> getProperties();
     }
+
+    @Bean
+    public Dotenv dotenv() {
+        return Dotenv.load();
+    }
+
 }

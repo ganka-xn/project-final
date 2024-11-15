@@ -136,6 +136,13 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
         <!--        https://youtrack.jetbrains.com/issue/IDEA-231927-->
         <dependency>
             <groupId>org.junit.platform</groupId>
