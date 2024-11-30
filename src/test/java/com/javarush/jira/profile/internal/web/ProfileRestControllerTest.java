@@ -3,7 +3,7 @@ package com.javarush.jira.profile.internal.web;
 import com.javarush.jira.AbstractControllerTest;
 
 import com.javarush.jira.common.util.JsonUtil;
-import com.javarush.jira.profile.ProfileTo;
+import com.javarush.jira.profile.ProfileDTO;
 import com.javarush.jira.profile.internal.ProfileMapper;
 import com.javarush.jira.profile.internal.ProfileRepository;
 import com.javarush.jira.profile.internal.model.Profile;
@@ -65,7 +65,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL)
     void shouldSucceeded_WhenUpdateWithUserProfile() throws Exception {
         Profile userProfileToUpdate = profileRepository.getExisted(USER_ID);
-        ProfileTo userProfileDTOtoUpdate = profileMapper.toTo(userProfileToUpdate);
+        ProfileDTO userProfileDTOtoUpdate = profileMapper.toDTO(userProfileToUpdate);
 
         userProfileDTOtoUpdate.setMailNotifications(USER_NOTIFICATIONS_UPDATED);
         userProfileDTOtoUpdate.setContacts(USER_CONTACTS_UPDATED);
@@ -78,7 +78,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         Profile userDbProfileAfterUpdate = profileRepository.getExisted(USER_ID);
-        ProfileTo userDbProfileDTOAfterUpdate = profileMapper.toTo(userDbProfileAfterUpdate);
+        ProfileDTO userDbProfileDTOAfterUpdate = profileMapper.toDTO(userDbProfileAfterUpdate);
 
         assertEquals(userProfileDTOtoUpdate, userDbProfileDTOAfterUpdate);
     }
@@ -88,7 +88,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Transactional
     @WithUserDetails(value = ADMIN_MAIL)
     void shouldSucceeded_WhenUpdateWithAdminProfile() throws Exception {
-        ProfileTo adminProfileDTOtoUpdate = ProfileTestData.getUpdatedAdminDTO();
+        ProfileDTO adminProfileDTOtoUpdate = ProfileTestData.getUpdatedAdminDTO();
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(adminProfileDTOtoUpdate)))
@@ -106,7 +106,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Transactional
     @WithUserDetails(value = ADMIN_MAIL)
     void shouldFail_WhenUpdateWithInvalidDTO() throws Exception {
-        ProfileTo invalidDTO = getInvalidDTO();
+        ProfileDTO invalidDTO = getInvalidDTO();
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalidDTO)))
@@ -118,10 +118,10 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Transactional
     @WithUserDetails(value = ADMIN_MAIL)
     void shouldFail_WhenUpdateWithUnknownNotificationDTO() throws Exception {
-        ProfileTo unknownNotificationTo = getWithUnknownNotificationDTO();
+        ProfileDTO unknownNotificationDTO = getWithUnknownNotificationDTO();
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(unknownNotificationTo)))
+                .content(JsonUtil.writeValue(unknownNotificationDTO)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -130,10 +130,10 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Transactional
     @WithUserDetails(value = ADMIN_MAIL)
     void shouldFail_WhenUpdateWithUnknownContactDTO() throws Exception {
-        ProfileTo unknownContactTo = getWithUnknownContactDTO();
+        ProfileDTO unknownContactDTO = getWithUnknownContactDTO();
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(unknownContactTo)))
+                .content(JsonUtil.writeValue(unknownContactDTO)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -142,10 +142,10 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = ADMIN_MAIL)
     @Transactional
     void shouldFail_WhenUpdateWithContactHtmlUnsafeDTO() throws Exception {
-        ProfileTo contactHtmlUnsafeTo = getWithContactHtmlUnsafeDTO();
+        ProfileDTO contactHtmlUnsafeDTO = getWithContactHtmlUnsafeDTO();
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(contactHtmlUnsafeTo)))
+                .content(JsonUtil.writeValue(contactHtmlUnsafeDTO)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
