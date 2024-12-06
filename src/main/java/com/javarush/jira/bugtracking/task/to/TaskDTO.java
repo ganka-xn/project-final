@@ -12,10 +12,14 @@ import lombok.Setter;
 public class TaskDTO extends TitleDTO implements HasCode, HasIdAndParentId {
     @Code
     private final String typeCode;
+
     Long parentId;
+
     @NotNull
     Long projectId;
+
     Long sprintId;
+
     @Setter
     @Code
     private String statusCode;

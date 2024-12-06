@@ -9,6 +9,7 @@ import com.javarush.jira.bugtracking.task.to.TaskDTOFull;
 import com.javarush.jira.common.to.CodeDTO;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.javarush.jira.bugtracking.ObjectType.TASK;
 import static com.javarush.jira.login.internal.web.UserTestData.ADMIN_ID;
@@ -59,9 +60,19 @@ public class TaskTestData {
     public static final UserBelong userTask2Assignment1 = new UserBelong(2L, TASK, USER_ID, "task_developer");
     public static final UserBelong userTask2Assignment2 = new UserBelong(2L, TASK, USER_ID, "task_tester");
 
+    // data for test tags
+    public static final Set<String> tags_data = Set.of("tag1", "tag2", "tag3");
+    public static final Set<String> tags_data_to_add = Set.of("tag4", "tag5");
+    public static final Set<String> tags_data_after_add = Set.of("tag1", "tag2", "tag3", "tag4", "tag5");
+    public static final Set<String> tags_for_replace = Set.of("tag6", "tag7");
+    public static final String tag_for_single_delete = "tag2";
+    public static final Set<String> tags_after_single_delete = Set.of("tag1", "tag3");
+
+
     static {
         taskDTOFull1.setActivityDTOs(activityDTOsForTask1);
         taskDTOFull2.setActivityDTOs(activityDTOsForTask2);
+        taskDTOFull1.setTags(tags_data);
     }
 
     public static TaskDTOExt getNewTaskDTO() {
