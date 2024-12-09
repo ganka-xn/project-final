@@ -5,4 +5,6 @@ target
 logs
 attachments
 *.patch
+
+properties.env
 #src/main/resources/environment-vars.yaml
