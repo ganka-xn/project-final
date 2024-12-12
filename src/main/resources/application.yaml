@@ -10,6 +10,8 @@ app:
 spring:
 #  config:
 #    import: classpath:environment-vars.yaml
+  profiles:
+    active: prod
   init:
     mode: always
   jpa:
@@ -29,9 +31,9 @@ spring:
         jdbc.batch_size: 20
 
   datasource:
-    url: ${POSTGRES_DB}
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USER}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   liquibase:
     changeLog: "classpath:db/changelog.sql"
