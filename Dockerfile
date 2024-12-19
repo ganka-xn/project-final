@@ -1,15 +1,18 @@
-FROM maven:3.9.9-amazoncorretto-17-debian
-
+FROM maven:3.9.9-amazoncorretto-17 AS build
 WORKDIR /app
 
-COPY pom.xml .
+COPY pom.xml ./
 COPY src ./src
-COPY resources ./resources
 
 RUN mvn clean package -Pprod
-RUN mv ./target/*.jar ./jira.jar
-RUN rm -rf ./target
+
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar jira.jar
+COPY /resources /app/resources
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/app/jira.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "/app/jira.jar"]
+CMD ["--spring.profiles.active=prod"]

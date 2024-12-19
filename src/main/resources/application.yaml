@@ -8,6 +8,7 @@ app:
     max-pool-size: 100
 
 spring:
+# alternative config
 #  config:
 #    import: classpath:environment-vars.yaml
   profiles:
@@ -36,7 +37,7 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
 
   liquibase:
-    changeLog: "classpath:db/changelog.sql"
+    changeLog: "classpath:db/changelog.xml"
 
   # Jackson Fields Serialization
   jackson:
@@ -102,9 +103,9 @@ spring:
 logging:
   level:
     root: WARN
-    com.javarush.jira: DEBUG
-    com.javarush.jira.common.config.MvcConfig: WARN
-    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
+    com.javarush.jira: WARN
+    com.javarush.jira.common.config.MvcConfig: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: WARN
 
 server:
   #  https://springdoc.org/index.html#how-can-i-deploy-springdoc-openapi-ui-behind-a-reverse-proxy
